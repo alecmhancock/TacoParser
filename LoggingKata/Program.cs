@@ -2,6 +2,8 @@
 using System.Linq;
 using System.IO;
 using GeoCoordinatePortable;
+using System.Data.Common;
+using System.Net.Http.Headers;
 
 namespace LoggingKata
 {
@@ -42,7 +44,15 @@ namespace LoggingKata
 
             //HINT NESTED LOOPS SECTION---------------------
             // Do a loop for your locations to grab each location as the origin (perhaps: `locA`)
-
+            foreach (var tacobell1 in locations)
+            {
+                var locA = new GeoCoordinate(tacobell1.Location.Latitude, tacobell1.Location.Longitude);
+                foreach (var tacobell2 in locations)
+                {
+                    var locB = new GeoCoordinate(tacobell2.Location.Latitude, tacobell2.Location.Longitude);
+                    
+                }
+            }
             // Create a new corA Coordinate with your locA's lat and long
 
             // Now, do another loop on the locations with the scope of your first loop, so you can grab the "destination" location (perhaps: `locB`)
