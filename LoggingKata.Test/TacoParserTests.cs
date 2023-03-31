@@ -20,10 +20,11 @@ namespace LoggingKata.Test
             Assert.NotNull(actual);
 
         }
-        // TESTS NOT COMPLETE FINISH BEFORE COMPLETION
+        
 
         [Theory]
         [InlineData("34.073638, -84.677017, Taco Bell Acwort...", -84.677017)]
+        [InlineData("33.635282, -86.684056, Taco Bell Birmingham...", -86.684056)]
         public void ShouldParseLongitude(string line, double expected)
         {
             // TODO: Complete - "line" represents input data we will Parse to
@@ -43,7 +44,9 @@ namespace LoggingKata.Test
 
         //TODO: Create a test ShouldParseLatitude
         [Theory]
-        [InlineData("34.073638, -84.677017, Taco Bell Acwort...", -84.677017)]
+        [InlineData("34.073638, -84.677017, Taco Bell Acwort...", 34.073638)]
+        [InlineData("33.635282, -86.684056, Taco Bell Birmingham...", 33.635282)]
+        
         public void ShouldParseLatitude(string line, double expected)
         {
             // TODO: Complete - "line" represents input data we will Parse to
