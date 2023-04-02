@@ -23,6 +23,8 @@ namespace LoggingKata
             #region variable declaration
             ITrackable track1 = null;
             ITrackable track2 = null;
+            ITrackable track3 = new TacoBell();
+            ITrackable track4 = new TacoBell();
             double distance = 0.0;
           
             var distRead = Convert.ToInt32(distance / 1000 * 1.609);
@@ -75,6 +77,9 @@ namespace LoggingKata
                             else if (store < distance)
                             {
                                 distance = store;
+                                track3 = locA;
+                                track4 = locB;
+
                                 
                             }
                         }
