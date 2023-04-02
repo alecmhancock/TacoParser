@@ -1,11 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using GeoCoordinatePortable;
+using System;
 using System.IO;
-using GeoCoordinatePortable;
-using System.Data.Common;
-using System.Net.Http.Headers;
-using System.Xml;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace LoggingKata
 {
@@ -16,55 +12,74 @@ namespace LoggingKata
 
         static void Main(string[] args)
         {
-            
+
 
             logger.LogInfo("Log initialized");
-
-           
             var lines = File.ReadAllLines(csvPath);
             logger.LogInfo($"Lines: {lines[0]}");
-
-            
             var parser = new TacoParser();
-
-            
             var locations = lines.Select(parser.Parse).ToArray();
 
-
-            // DON'T FORGET TO LOG YOUR STEPS
-
-            // Now that your Parse method is completed, START BELOW ----------
-
-            // TODO: Create two `ITrackable` variables with initial values of `null`. These will be used to store your two taco bells that are the farthest from each other.
-            // Create a `double` variable to store the distance
+            #region variable declaration
             ITrackable track1 = null;
             ITrackable track2 = null;
             double distance = 0.0;
-            // Include the Geolocation toolbox, so you can compare locations: `using GeoCoordinatePortable;`
+            #endregion
 
-            //HINT NESTED LOOPS SECTION---------------------
-            // Do a loop for your locations to grab each location as the origin (perhaps: `locA`)
-            foreach (var tacobell1 in locations)
+            Console.WriteLine("Would you like to find the closest or farthest Taco Bells in this list?");
+            var userInput = Console.ReadLine();
+
+            #region logic for distance measurement
+            switch (userInput.ToLower())
             {
-                var locA = new GeoCoordinate(tacobell1.Location.Latitude, tacobell1.Location.Longitude);
-                foreach (var tacobell2 in locations)
-                {
-                    var locB = new GeoCoordinate(tacobell2.Location.Latitude, tacobell2.Location.Longitude);
-                    var store = locA.GetDistanceTo(locB);
-                    if (store >  distance)
+                #region Default (farthest, as per assignment scope
+                default:
+                    foreach (var tacobell1 in locations)
                     {
-                        distance = store;
-                        track1 = tacobell1;
-                        track2 = tacobell2;
+                        var locA = new GeoCoordinate(tacobell1.Location.Latitude, tacobell1.Location.Longitude);
+                        foreach (var tacobell2 in locations)
+                        {
+                            var locB = new GeoCoordinate(tacobell2.Location.Latitude, tacobell2.Location.Longitude);
+                            var store = locA.GetDistanceTo(locB);
+                            if (store > distance)
+                            {
+                                distance = store;
+                                track1 = tacobell1;
+                                track2 = tacobell2;
+                            }
+                        }
                     }
-                }
+                    break;
+                #endregion
+                #region closest
+                case "closest":
+                    foreach (var tacobell1 in locations)
+                    {
+                        var locA = new GeoCoordinate(tacobell1.Location.Latitude, tacobell1.Location.Longitude);
+                        foreach (var tacobell2 in locations)
+                        {
+                            var store = 1.0;
+                            var locB = new GeoCoordinate(tacobell2.Location.Latitude, tacobell2.Location.Longitude);
+                            store = locA.GetDistanceTo(locB);
+                            if (store < distance)
+                            {
+                                distance = store;
+                                track1 = tacobell1;
+                                track2 = tacobell2;
+                            }
+
+                        }
+                    }
+                    break;
             }
+            #endregion
+            #endregion
 
             var distRead = Convert.ToInt32(distance / 1000 * 1.609);
+            Console.WriteLine($"The furthest Tacobells are {track1.Name} and {track2.Name}," +
+                $"\n" +
+                $"and they are about {distRead} miles away from each other.");
 
-            Console.WriteLine(distRead);
-
-            Console.WriteLine($"The furthest Tacobells are {track1.Name} and {track2.Name}, and they are about {distRead} miles away from each other.");
 
         }
     }
