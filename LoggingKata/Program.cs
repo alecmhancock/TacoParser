@@ -19,12 +19,12 @@ namespace LoggingKata
             logger.LogInfo($"Lines: {lines[0]}");
             var parser = new TacoParser();
             var locations = lines.Select(parser.Parse).ToArray();
-
+            
             #region variable declaration
             ITrackable track1 = null;
             ITrackable track2 = null;
             double distance = 0.0;
-            double distance2 = 1.0;
+          
             var distRead = Convert.ToInt32(distance / 1000 * 1.609);
             #endregion
 
@@ -51,7 +51,7 @@ namespace LoggingKata
                             }
                         }
                     }
-                    
+
                     Console.WriteLine($"The furthest Tacobells are {track1.Name} and {track2.Name}," +
                         $"\n" +
                         $"and they are about {distRead} miles away from each other.");
@@ -61,25 +61,30 @@ namespace LoggingKata
 
                 #region closest
                 case "closest":
-                    foreach (var tacobell1 in locations)
+                    for (var i = 0 ; i < locations.Length; i++)
                     {
-                        var locA = new GeoCoordinate(tacobell1.Location.Latitude, tacobell1.Location.Longitude);
-                        foreach (var tacobell2 in locations)
+                        var locA = new GeoCoordinate(locations[i].Location.Latitude, locations[i].Location.Longitude);
+                        for (var e = 0 ; e < locations.Length; e++)
                         {
-
-                            var locB = new GeoCoordinate(tacobell2.Location.Latitude, tacobell2.Location.Longitude);
+                            var locB = new GeoCoordinate(locations[e].Location.Latitude, locations[e].Location.Longitude);
                             var store = locA.GetDistanceTo(locB);
-                            var compare = store < distance;
-
-
+                            if (locA == locB)
+                            {
+                                locations[e] = null;
+                            }
+                            else if (store < distance)
+                            {
+                                distance = store;
+                                
+                            }
                         }
                     }
-                    
+
                     Console.WriteLine($"The closest Tacobells are {track1.Name} and {track2.Name}," +
                         $"\n" +
                         $"and they are about {distRead} miles away from each other.");
                     break;
-                    
+
             }
             #endregion
             #endregion
