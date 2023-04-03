@@ -17,14 +17,14 @@ namespace LoggingKata
             logger.LogInfo("Log initialized");
             var lines = File.ReadAllLines(csvPath);
             logger.LogInfo($"Lines: {lines[0]}");
-            var parser = new TacoParser();
-            var locations = lines.Select(parser.Parse).ToArray();
+            
 
             #region variable declaration
             ITrackable track1 = new TacoBell();
             ITrackable track2 = new TacoBell();
             double distance = 0.0;
-
+            var parser = new TacoParser();
+            var locations = lines.Select(parser.Parse).ToArray();
 
 
             #endregion
@@ -72,17 +72,12 @@ namespace LoggingKata
                             var locB = locations[e];
                             var coordB = new GeoCoordinate(locB.Location.Latitude, locB.Location.Longitude);
                             var store = coordA.GetDistanceTo(coordB);
-                            if (coordA == coordB || store < 1)
-                            {
-                                continue;
-                            }
-                            else if (distance > store)
+                           
+                            if (distance > store && distance > 1.00)
                             {
                                 distance = store;
-                                track1 = locA;
-                                track2 = locB;
-
-
+                                track1 = locations[i];
+                                track2 = locations[e];
                             }
                         }
                     }
