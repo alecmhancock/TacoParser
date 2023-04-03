@@ -54,7 +54,7 @@ namespace LoggingKata
                         }
                     }
 
-                    Console.WriteLine($"The furthest Tacobells are {track1.Name} and {track2.Name}," +
+                    Console.WriteLine($"The furthest Taco Bells are {track1.Name} and {track2.Name}," +
                         $"\n" +
                         $"and they are about {distRead} miles away from each other.");
 
@@ -65,16 +65,18 @@ namespace LoggingKata
                 case "closest":
                     for (var i = 0 ; i < locations.Length; i++)
                     {
-                        var locA = new GeoCoordinate(locations[i].Location.Latitude, locations[i].Location.Longitude);
+                        var locA = locations[i];
+                        var coordA = new GeoCoordinate(locations[i].Location.Latitude, locations[i].Location.Longitude);
                         for (var e = 0 ; e < locations.Length; e++)
                         {
-                            var locB = new GeoCoordinate(locations[e].Location.Latitude, locations[e].Location.Longitude);
-                            var store = locA.GetDistanceTo(locB);
-                            if (locA == locB)
+                            var locB = locations[e];
+                            var coordB = new GeoCoordinate(locations[e].Location.Latitude, locations[e].Location.Longitude);
+                            var store = coordA.GetDistanceTo(coordB);
+                            if (coordA == coordB)
                             {
-                                locations[e] = null;
+                                continue;
                             }
-                            else if (store < distance)
+                            else if (store < distance && locA != null && locB != null)
                             {
                                 distance = store;
                                 track3 = locA;
@@ -85,9 +87,9 @@ namespace LoggingKata
                         }
                     }
 
-                    Console.WriteLine($"The closest Tacobells are {track1.Name} and {track2.Name}," +
+                    Console.WriteLine($"The closest Taco Bells are {track3.Name} and {track4.Name}," +
                         $"\n" +
-                        $"and they are about {distRead} miles away from each other.");
+                        $"and they are about {distance} miles away from each other.");
                     break;
 
             }
