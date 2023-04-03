@@ -21,13 +21,12 @@ namespace LoggingKata
             var locations = lines.Select(parser.Parse).ToArray();
 
             #region variable declaration
-            ITrackable track1 = null;
-            ITrackable track2 = null;
-            ITrackable track3 = new TacoBell();
-            ITrackable track4 = new TacoBell();
+            ITrackable track1 = new TacoBell();
+            ITrackable track2 = new TacoBell();
             double distance = 0.0;
 
-            var distRead = Convert.ToInt32(distance / 1000 * 1.609);
+
+
             #endregion
 
             Console.WriteLine("Would you like to find the closest or farthest Taco Bells in this list?");
@@ -36,8 +35,10 @@ namespace LoggingKata
             #region logic for distance measurement
             switch (userInput.ToLower())
             {
+
                 #region Default (farthest, as per assignment scope)
                 default:
+
                     foreach (var tacobell1 in locations)
                     {
                         var locA = new GeoCoordinate(tacobell1.Location.Latitude, tacobell1.Location.Longitude);
@@ -53,7 +54,7 @@ namespace LoggingKata
                             }
                         }
                     }
-
+                    var distRead = Convert.ToInt32(distance / 1000 * 1.609);
                     Console.WriteLine($"The furthest Taco Bells are {track1.Name} and {track2.Name}," +
                         $"\n" +
                         $"and they are about {distRead} miles away from each other.");
@@ -72,33 +73,36 @@ namespace LoggingKata
                             var locB = locations[e];
                             var coordB = new GeoCoordinate(locB.Location.Latitude, locB.Location.Longitude);
                             var store = coordA.GetDistanceTo(coordB);
-                            if (coordA == coordB)
+                            if (coordA == coordB || store < 1)
                             {
                                 continue;
                             }
-                            else if (store < distance && locA != null && locB != null)
+                            else if (distance > store)
                             {
                                 distance = store;
-                                track3 = locA;
-                                track4 = locB;
+                                track1 = locA;
+                                track2 = locB;
 
 
                             }
                         }
                     }
 
-                    Console.WriteLine($"The closest Taco Bells are {track3.Name} and {track4.Name}," +
-                        $"\n" +
-                        $"and they are about {distance} miles away from each other.");
-                    break;
 
-            }
-            #endregion
-            #endregion
+                    distRead = Convert.ToInt32(distance / 1000 * 1.609);
+            Console.WriteLine($"The closest Taco Bells are {track1.Name} and {track2.Name}," +
+                $"\n" +
+                $"and they are about {distRead} miles away from each other.");
 
-
-
+            break;
 
         }
+        #endregion
+        #endregion
+
+
+
+
     }
+}
 }
