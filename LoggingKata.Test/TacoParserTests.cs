@@ -20,8 +20,8 @@ namespace LoggingKata.Test
             Assert.NotNull(actual);
 
         }
-        
 
+        #region Longitude Test
         [Theory]
         [InlineData("34.073638, -84.677017, Taco Bell Acwort...", -84.677017)]
         [InlineData("33.635282, -86.684056, Taco Bell Birmingham...", -86.684056)]
@@ -40,13 +40,12 @@ namespace LoggingKata.Test
             //Assert
             Assert.Equal(expected, actual.Location.Longitude);
         }
+        #endregion
 
-
-        //TODO: Create a test ShouldParseLatitude
+        #region Latitude Test
         [Theory]
         [InlineData("34.073638, -84.677017, Taco Bell Acwort...", 34.073638)]
         [InlineData("33.635282, -86.684056, Taco Bell Birmingham...", 33.635282)]
-        
         public void ShouldParseLatitude(string line, double expected)
         {
             // TODO: Complete - "line" represents input data we will Parse to
@@ -62,5 +61,6 @@ namespace LoggingKata.Test
             //Assert
             Assert.Equal(expected, actual.Location.Latitude);
         }
+        #endregion
     }
 }
