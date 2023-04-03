@@ -19,14 +19,14 @@ namespace LoggingKata
             logger.LogInfo($"Lines: {lines[0]}");
             var parser = new TacoParser();
             var locations = lines.Select(parser.Parse).ToArray();
-            
+
             #region variable declaration
             ITrackable track1 = null;
             ITrackable track2 = null;
             ITrackable track3 = new TacoBell();
             ITrackable track4 = new TacoBell();
             double distance = 0.0;
-          
+
             var distRead = Convert.ToInt32(distance / 1000 * 1.609);
             #endregion
 
@@ -36,7 +36,7 @@ namespace LoggingKata
             #region logic for distance measurement
             switch (userInput.ToLower())
             {
-                #region Default (farthest, as per assignment scope
+                #region Default (farthest, as per assignment scope)
                 default:
                     foreach (var tacobell1 in locations)
                     {
@@ -63,14 +63,14 @@ namespace LoggingKata
 
                 #region closest
                 case "closest":
-                    for (var i = 0 ; i < locations.Length; i++)
+                    for (var i = 0; i < locations.Length; i++)
                     {
                         var locA = locations[i];
-                        var coordA = new GeoCoordinate(locations[i].Location.Latitude, locations[i].Location.Longitude);
-                        for (var e = 0 ; e < locations.Length; e++)
+                        var coordA = new GeoCoordinate(locA.Location.Latitude, locA.Location.Longitude);
+                        for (var e = 0; e < locations.Length; e++)
                         {
                             var locB = locations[e];
-                            var coordB = new GeoCoordinate(locations[e].Location.Latitude, locations[e].Location.Longitude);
+                            var coordB = new GeoCoordinate(locB.Location.Latitude, locB.Location.Longitude);
                             var store = coordA.GetDistanceTo(coordB);
                             if (coordA == coordB)
                             {
@@ -82,7 +82,7 @@ namespace LoggingKata
                                 track3 = locA;
                                 track4 = locB;
 
-                                
+
                             }
                         }
                     }
