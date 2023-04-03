@@ -45,10 +45,9 @@ namespace LoggingKata
                         foreach (var tacobell2 in locations)
                         {
                             var locB = new GeoCoordinate(tacobell2.Location.Latitude, tacobell2.Location.Longitude);
-                            var store = locA.GetDistanceTo(locB);
-                            if (store > distance)
+                            if (locA.GetDistanceTo(locB) > distance)
                             {
-                                distance = store;
+                                distance = locA.GetDistanceTo(locB);
                                 track1 = tacobell1;
                                 track2 = tacobell2;
                             }
