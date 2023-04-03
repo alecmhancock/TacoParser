@@ -30,17 +30,17 @@ namespace LoggingKata
             double distance = 0.0;
             #endregion
 
-            foreach (var tacobell1 in locations)
+            foreach (var tacoBell1 in locations)
             {
-                var locA = new GeoCoordinate(tacobell1.Location.Latitude, tacobell1.Location.Longitude);
-                foreach (var tacobell2 in locations)
+                var locA = new GeoCoordinate(tacoBell1.Location.Latitude, tacoBell1.Location.Longitude);
+                foreach (var tacoBell2 in locations)
                 {
-                    var locB = new GeoCoordinate(tacobell2.Location.Latitude, tacobell2.Location.Longitude);
+                    var locB = new GeoCoordinate(tacoBell2.Location.Latitude, tacoBell2.Location.Longitude);
                     if (locA.GetDistanceTo(locB) > distance)
                     {
                         distance = locA.GetDistanceTo(locB);
-                        track1 = tacobell1;
-                        track2 = tacobell2;
+                        track1 = tacoBell1;
+                        track2 = tacoBell2;
                     }
                 }
             }
