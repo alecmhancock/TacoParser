@@ -45,7 +45,7 @@ namespace LoggingKata
                 }
             }
 
-            var distRead = Convert.ToInt32(distance / 1000 * 1.609);
+            var distRead = Convert.ToInt32(distance * 0.00062);
             Console.WriteLine($"The furthest Tacobells are {track1.Name} and {track2.Name}," +
                 $"\nand they are about {distRead} miles away from each other.");
 
