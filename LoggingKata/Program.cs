@@ -71,13 +71,13 @@ namespace LoggingKata
                         {
                             var locB = locations[e];
                             var coordB = new GeoCoordinate(locB.Location.Latitude, locB.Location.Longitude);
-                            var store = coordA.GetDistanceTo(coordB);
-                           
-                            if (distance > store && distance > 1.00)
+                            
+
+                            if (coordA.GetDistanceTo(coordB) < distance)
                             {
-                                distance = store;
-                                track1 = locations[i];
-                                track2 = locations[e];
+                                distance = coordA.GetDistanceTo(coordB);
+                                track1 = locA;
+                                track2 = locB;
                             }
                         }
                     }
